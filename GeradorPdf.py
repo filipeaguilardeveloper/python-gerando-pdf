@@ -350,3 +350,19 @@ class GeradorPdf():
                 item = str(item)
                 self.pdf.cell(col_largura, col_altura * espacamento, txt=item.decode('UTF-8').upper(), border='',
                             align="R")
+    
+    def criarDocumentoPdf(self, nome_documento):
+        '''
+        :param nome_documento: será o nome do arquivo .pdf
+        tipo_relatorio:
+        1 p/ 'apuração de comissão';
+        2 p/ 'comissão mecânico';
+        3 p/ 'comissão telemarketing';
+        4 p/ 'Relatório de prêmio';
+        5 p/ 'Relatório de comissão de vendedor'
+        '''
+        dir_documento = "documents/"
+        nome_documento = nome_documento
+        nome_completo_documento = dir_documento + nome_documento + '.pdf'
+
+        self.pdf.output(nome_completo_documento, 'F')
