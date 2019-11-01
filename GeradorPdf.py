@@ -282,4 +282,71 @@ class GeradorPdf():
             self.criarTabela(atributos=atributos, tuplas=tuplas, tupla_totais=tupla_totais, header_font_size=7,
                             body_font_size=7, extra=0)
 
-    
+    def criarTabela(self, atributos, tuplas, tupla_totais='', header_font_size=10, body_font_size=10, extra=0.5,
+                    espacamento=2):
+        '''
+        :param pdf: instância de FDPF
+        :param atributos: array contendo as colunas da tabela
+        :param tuplas: array contendo as tuplas da tabela
+        :param tupla_totais: array contendo a tupla de totais (quando houver)
+        :param header_font_size: tamanho da fonte do cabeçalho da tablea
+        :param body_font_size: tamanho da fonte do corpo da tabela
+        :param extra: medida extra adicionada à largura das colunas
+        tipo_relatorio:
+        1 p/ 'apuração de comissão';
+        2 p/ 'comissão mecânico';
+        3 p/ 'comissão telemarketing';
+        4 p/ 'Relatório de prêmio';
+        5 p/ 'Relatório de comissão de vendedor'
+        '''
+
+        qtde_atributos = len(atributos)
+        col_largura = self.largura_doc / qtde_atributos + extra
+        col_altura = 5
+
+        # Criando o contorno do cabeçalho da tabela:
+        self.pdf.line(10, self.pdf.get_y(), 10, self.pdf.get_y() + col_altura * espacamento)
+        self.pdf.line(10, (self.pdf.get_y() + col_altura * espacamento), self.pdf.w - 10,
+                    (self.pdf.get_y() + (col_altura * espacamento)))
+        self.pdf.line(self.pdf.w - 10, self.pdf.get_y(), self.pdf.w - 10, self.pdf.get_y() + col_altura * espacamento)
+
+        # Adicionando os atributos da tabela do PDF
+        self.pdf.set_font('Arial', 'B', header_font_size)
+        for atributo in atributos:
+            atributo = str(atributo)
+            self.pdf.cell(col_largura, col_altura * espacamento, txt=atributo.decode('UTF-8').upper(), border='',
+                        align="R")
+        self.pdf.ln(col_altura * espacamento)
+
+        # Adcionando as tuplas da tabela PDF:
+        self.pdf.set_font('Arial', '', body_font_size)
+        for tupla in tuplas:
+            # Criando o contorno para cada tupla da tabela do PDF:
+            self.pdf.line(10, self.pdf.get_y(), 10, self.pdf.get_y() + col_altura * espacamento)
+            self.pdf.line(10, (self.pdf.get_y() + col_altura * espacamento), self.pdf.w - 10,
+                        (self.pdf.get_y() + col_altura * espacamento))
+            self.pdf.line(self.pdf.w - 10, self.pdf.get_y(), self.pdf.w - 10,
+                        self.pdf.get_y() + col_altura * espacamento)
+
+            for item in tupla:
+                item = str(item)
+                self.pdf.cell(col_largura, col_altura * espacamento, txt=item[0:20].decode('UTF-8').upper(), border='',
+                            align="R")
+            self.pdf.ln(col_altura * espacamento)
+
+        if tupla_totais:
+            # Adicionando a tupla de totais da tabela PDF:
+            # Criando o contorno para cada tupla da tabela do PDF:
+            self.pdf.line(10, self.pdf.get_y(), 10, self.pdf.get_y() + col_altura * espacamento)
+            self.pdf.line(10, (self.pdf.get_y() + col_altura * espacamento), self.pdf.w - 10,
+                        (self.pdf.get_y() + col_altura * espacamento))
+            self.pdf.line(self.pdf.w - 10, self.pdf.get_y(), self.pdf.w - 10,
+                        self.pdf.get_y() + col_altura * espacamento)
+            self.pdf.set_font('Arial', 'B', header_font_size)
+            self.pdf.cell(col_largura, col_altura * espacamento, txt=u"Totais: ".decode('UTF-8').upper(), border='',
+                        align="R")
+            self.pdf.set_font('Arial', '', body_font_size)
+            for item in tupla_totais:
+                item = str(item)
+                self.pdf.cell(col_largura, col_altura * espacamento, txt=item.decode('UTF-8').upper(), border='',
+                            align="R")
