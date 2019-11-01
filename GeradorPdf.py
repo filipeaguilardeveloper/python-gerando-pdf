@@ -152,3 +152,52 @@ class GeradorPdf():
                                 txt=u'Data de impressão: ' + self.informacoes_cabecalho['data_impressao'], border='RB', ln=1,
                                 align='R')
 
+    def criarCabecalhoSecundarioPdf(self):
+        '''
+        :param tipo_relatorio:
+        1 p/ 'apuração de comissão';
+        2 p/ 'comissão mecânico';
+        3 p/ 'comissão telemarketing';
+        4 p/ 'Relatório de prêmio';
+        5 p/ 'Relatório de comissão de vendedor'
+        '''
+        if self.informacoes_cabecalho['tipo_relatorio'] == 1:
+            cell_largura_metade = self.largura_doc / 2
+            cell_altura = 7
+            self.pdf.set_font('Arial', 'B', 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Contabilizadores de resultados".upper(), "LR", 0, "C")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.set_font('Arial', 'B', 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Taxas de comissão".upper(), "R", 1, "C")
+            self.pdf.set_font('Arial', '', 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Quantidade de dias trabalhados: 27", "LR", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Ajudante de mecânico: %", "R", 1, "L")
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Meta no mês:  837 carros", "LR", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Mecânico I: %", "R", 1, "L")
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Meta de carros media/dia: 31 carros", "LR", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Mecânico II: %", "LR", 1, "L")
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Produção mensal alcançada: 922 carros", "LR", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"", "LR", 1, "L")
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Produção mensal alcançada: 922 carros", "LRB", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"", "LRB", 1, "L")
+
+        elif self.informacoes_cabecalho['tipo_relatorio'] == 3:
+            cell_largura_metade = self.largura_doc / 2
+            cell_altura = 7
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Meta: R$ 16.000,00", "LR", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Cálculo Meta - 1% sobre o total da venda", "R", 1, "L")
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Super Meta: R$ 20.000,00", "LR", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Cálculo Meta - 1% sobre o total da venda", "R", 1, "L")
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Total geral do turno: R$ 55.865,00", "LR", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Cálculo Meta - 1% sobre o total da venda", "R", 1, "L")
+            self.pdf.cell(cell_largura_metade, cell_altura, u"", "LRB", 0, "L")
+            self.pdf.set_x(cell_largura_metade + 10)
+            self.pdf.cell(cell_largura_metade, cell_altura, u"Cálculo Meta - 1% sobre o total da venda", "RB", 1, "L")
