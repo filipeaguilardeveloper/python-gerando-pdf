@@ -201,3 +201,85 @@ class GeradorPdf():
             self.pdf.cell(cell_largura_metade, cell_altura, u"", "LRB", 0, "L")
             self.pdf.set_x(cell_largura_metade + 10)
             self.pdf.cell(cell_largura_metade, cell_altura, u"Cálculo Meta - 1% sobre o total da venda", "RB", 1, "L")
+    
+    def prepararDadosTabela(self):
+        '''
+        tipo_relatorio:
+        1 p/ 'apuração de comissão';
+        2 p/ 'comissão mecânico';
+        3 p/ 'comissão telemarketing';
+        4 p/ 'Relatório de prêmio';
+        5 p/ 'Relatório de comissão de vendedor'
+        '''
+        # Criando a tabela com as informações:
+        if self.informacoes_cabecalho['tipo_relatorio'] == 1:
+            atributos = ["Produção", "Ajudante", "Mecânico I", "Mecânico II"]
+            tuplas = [
+                ["0 - 2000", "0,25%", "0,5%", "1%"],
+                ["0 - 2000", "0,25%", "0,5%", "1%"]
+            ]
+            # Criando tabela com as informações
+            self.criarTabela(atributos=atributos, tuplas=tuplas, header_font_size=10, body_font_size=10, extra=0)
+
+        elif self.informacoes_cabecalho['tipo_relatorio'] == 2:
+            atributos = ["Nome", "Qtde. Carros", "Valor em troca", "Taxa de Comissão", "Valor de Comissão",
+                        "Assinatura"]
+            tuplas = [
+                ['DILSON 1', '78', 'R$ 14.045,50', '1%', 'R$ 127,60', '__________________'],
+                ['DILSON 2', '78', 'R$ 4.760,00', '1%', 'R$ 127,60', '__________________'],
+                ['DILSON 3', '78', 'R$ 760,00', '1%', 'R$ 127,60', '__________________'],
+                ['DILSON 4', '78', 'R$ 12.760,00', '1%', 'R$ 127,60', '__________________'],
+                ['DILSON 3', '78', 'R$ 760,00', '1%', 'R$ 127,60', '__________________'],
+                ['DILSON 4', '78', 'R$ 12.760,00', '1%', 'R$ 127,60', '__________________']
+            ]
+            tupla_totais = ["T. carros", "T. v.troca", "", "T. v.comissão"]
+
+            # Criando tabela com as informações
+            self.criarTabela(atributos=atributos, tuplas=tuplas, tupla_totais=tupla_totais, header_font_size=10,
+                            body_font_size=10, extra=0)
+
+        elif self.informacoes_cabecalho['tipo_relatorio'] == 3:
+            atributos = ["Operador", "Produção", "Atingiu a Meta?", "Atingiu Super Meta?", "Taxa Meta",
+                        "Taxa SuperMeta",
+                        "Valor Meta",
+                        "Valor SuperMeta", "Total"]
+            tuplas = [
+                ['DARLEY LOPES', 'R$ 21.731,00', 'SIM', 'SIM', '1%', '1,5%', 'R$ 00,00', 'R$ 325,96', 'R$ 0,00'],
+                ['DEIVID SANTOS', 'R$ 20.379,00', 'SIM', 'SIM', '1%', '1,5%', 'R$ 00,00', 'R$ 305,69', 'R$ 0,00'],
+                ['MATHEUS FELIPE', 'R$ 13.585,00', 'NÃO', 'NÃO', '1%', '1,5%', 'R$ 00,00', 'R$ 0,00', 'R$ 0,00'],
+                ['RAFAEL SOARES', 'R$ 170,00', 'SIM', 'NÃO', '1%', '1,5%', 'R$ 00,00', 'R$ 157,91', 'R$ 0,00']
+            ]
+            tupla_totais = ["T. produção", "", "", "", "", "T. Meta", "T. supermeta", "T. total"]
+
+            # Criando tabela com as informações
+            self.criarTabela(atributos=atributos, tuplas=tuplas, tupla_totais=tupla_totais, header_font_size=7,
+                            body_font_size=7, extra=0)
+
+        elif self.informacoes_cabecalho['tipo_relatorio'] == 4:
+            atributos = ["Nome", "Valor em troca", "Valor da comissão", "Assinatura"]
+            tuplas = [
+                ['PATRICK GONÇALVES MEC', 'R$ 16.920,00', 'R$ 250,00', '_________________'],
+                ['GUILHERME JUNIOR MENDES MEC', 'R$ 16.677,00', 'R$ 50,00', '_________________']
+            ]
+            tupla_totais = ["", "R$300,00", "", " "]
+
+            # Criando tabela com as informações
+            self.criarTabela(atributos=atributos, tuplas=tuplas, tupla_totais=tupla_totais, header_font_size=10,
+                            body_font_size=10, extra=0)
+
+        elif self.informacoes_cabecalho['tipo_relatorio'] == 5:
+            atributos = ["Nome", "Qtde. Carros", "Produção", "Média", "Produção + Média", "Taxa", "Valor da comissão",
+                        "Assinatura"]
+            tuplas = [
+                ['Alexandre Siqueira Cardoso', '416', 'R$ 83.809,10', 'R$ 0,00', 'R$ 83.809,10', '0,5%', 'R$ 419,05',
+                '________________'],
+                ['Lucas Almeida', '380', 'R$ 642,00', 'R$ R$ 48.657,82', 'R$ 49.299,82', '0,5%', 'R$ 420,00',
+                '________________']
+            ]
+            tupla_totais = ["", "R$ 84.451,10", "", "", "", "839,05", ""]
+
+            # Criando tabela com as informações
+            self.criarTabela(atributos=atributos, tuplas=tuplas, tupla_totais=tupla_totais, header_font_size=7,
+                            body_font_size=7, extra=0)
+
+    
