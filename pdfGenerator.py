@@ -4,7 +4,7 @@ from fpdf import fpdf
 import os
 
 
-class GeradorPdf():
+class pdfGenerator():
 
     def __init__(self, tipo_relatorio, titulo_relatorio, nome_empresa, periodo_inicial, periodo_final, funcao='',
                  turno=''):
