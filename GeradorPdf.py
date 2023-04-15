@@ -1,6 +1,7 @@
 # encoding: utf-8
 from datetime import date
 from fpdf import fpdf
+import os
 
 
 class GeradorPdf():
@@ -314,7 +315,7 @@ class GeradorPdf():
         self.pdf.set_font('Arial', 'B', header_font_size)
         for atributo in atributos:
             atributo = str(atributo)
-            self.pdf.cell(col_largura, col_altura * espacamento, txt=atributo.decode('UTF-8').upper(), border='',
+            self.pdf.cell(col_largura, col_altura * espacamento, txt=atributo.upper(), border='',
                         align="R")
         self.pdf.ln(col_altura * espacamento)
 
@@ -330,7 +331,7 @@ class GeradorPdf():
 
             for item in tupla:
                 item = str(item)
-                self.pdf.cell(col_largura, col_altura * espacamento, txt=item[0:20].decode('UTF-8').upper(), border='',
+                self.pdf.cell(col_largura, col_altura * espacamento, txt=item[0:20].upper(), border='',
                             align="R")
             self.pdf.ln(col_altura * espacamento)
 
@@ -343,26 +344,25 @@ class GeradorPdf():
             self.pdf.line(self.pdf.w - 10, self.pdf.get_y(), self.pdf.w - 10,
                         self.pdf.get_y() + col_altura * espacamento)
             self.pdf.set_font('Arial', 'B', header_font_size)
-            self.pdf.cell(col_largura, col_altura * espacamento, txt=u"Totais: ".decode('UTF-8').upper(), border='',
+            self.pdf.cell(col_largura, col_altura * espacamento, txt=u"Totais: ".upper(), border='',
                         align="R")
             self.pdf.set_font('Arial', '', body_font_size)
             for item in tupla_totais:
                 item = str(item)
-                self.pdf.cell(col_largura, col_altura * espacamento, txt=item.decode('UTF-8').upper(), border='',
+                self.pdf.cell(col_largura, col_altura * espacamento, txt=item.upper(), border='',
                             align="R")
     
-    def criarDocumentoPdf(self, nome_documento):
+    def criarDocumentoPdf(self, pdf_name, folder=""):
         '''
-        :param nome_documento: será o nome do arquivo .pdf
-        tipo_relatorio:
-        1 p/ 'apuração de comissão';
-        2 p/ 'comissão mecânico';
-        3 p/ 'comissão telemarketing';
-        4 p/ 'Relatório de prêmio';
-        5 p/ 'Relatório de comissão de vendedor'
+        :param pdf_name: nome do arquivo .pdf
+        :param folder: pasta de destino do arquivo
         '''
-        dir_documento = "documents/"
-        nome_documento = nome_documento
-        nome_completo_documento = dir_documento + nome_documento + '.pdf'
 
-        self.pdf.output(nome_completo_documento, 'F')
+        dir = os.getcwd()
+        path = dir + "/" + folder
+        os.makedirs(path, exist_ok=True)
+        print(f"\033[0;32mDocumento criado em : {path}\033[0m")
+
+        pdf_file = path + "/" + pdf_name + '.pdf'
+
+        self.pdf.output(pdf_file, 'F')
