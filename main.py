@@ -29,4 +29,4 @@ prepararDocumento = GeradorRelatorioPdf(tipo_relatorio=5, titulo_relatorio=u"Rel
 
 prepararDocumento.criarCabecalhoPdf()
 prepararDocumento.prepararDadosTabela()
-prepararDocumento.criarDocumentoPdf('modelo_exemplo')
+prepararDocumento.criarDocumentoPdf('modelo_exemplo',folder='docs')
